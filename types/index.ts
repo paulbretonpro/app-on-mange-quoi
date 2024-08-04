@@ -7,6 +7,9 @@ export interface IRecipe {
   nbPersons: number;
   categoryId: number;
   createdAt: Date;
+
+  category?: ICategory;
+  ingredients?: IIngredientQuantity[];
 }
 
 export interface IRecipeParams {
@@ -20,4 +23,11 @@ export interface IRecipeParams {
 export interface ICategory {
   id: number;
   name: string;
+}
+
+export interface IIngredientQuantity {
+  id: number;
+  name: string;
+  quantity: number;
+  unit: string;
 }

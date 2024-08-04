@@ -47,7 +47,7 @@ const handleSelectCategory = (categoryId: number) => {
 };
 </script>
 <template>
-  <div class="flex gap-4 justify-between mb-6">
+  <div class="flex gap-4 justify-between mb-6 w-full">
     <ListCategories
       :categories="categories"
       :categories-selected="categoriesSelected"
@@ -66,7 +66,7 @@ const handleSelectCategory = (categoryId: number) => {
     class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
     v-if="recipes?.length"
   >
-    <CardRecipe v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+    <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
   </div>
 
   <div v-else class="flex w-full justify-center">Aucune recette</div>

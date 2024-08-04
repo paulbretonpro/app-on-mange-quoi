@@ -1,16 +1,8 @@
 <script setup lang="ts">
 const route = useRoute();
+const router = useRouter();
 
-const colorMode = useColorMode();
-
-const isDark = computed({
-  get() {
-    return colorMode.value === "dark";
-  },
-  set() {
-    colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
-  },
-});
+const isSubRoute = computed(() => route.fullPath.split("/").length > 2);
 
 const links = [
   [
@@ -36,6 +28,14 @@ const links = [
 <template>
   <div class="min-h-screen flex flex-col justify-between">
     <div class="py-6 px-4 h-full grow">
+      <UButton
+        v-if="isSubRoute"
+        icon="i-heroicons-arrow-long-left"
+        variant="outline"
+        class="mb-4"
+        @click="router.back()"
+        >Retour</UButton
+      >
       <slot></slot>
     </div>
 

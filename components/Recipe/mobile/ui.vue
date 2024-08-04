@@ -1,0 +1,20 @@
+<script setup lang="ts">
+import type { IRecipe } from "~/types";
+
+defineProps<{
+  recipe: IRecipe;
+}>();
+</script>
+<template>
+  <div v-if="recipe" class="border rounded-lg p-4">
+    <div class="rounded-md overflow-hidden">
+      <NuxtImg src="/assets/recipeImg.jpg" />
+    </div>
+
+    <div class="flex justify-between">
+      <div>{{ recipe.name }}</div>
+      <div>{{ recipe.nbPersons }}</div>
+    </div>
+    <div>{{ recipe.description }}</div>
+  </div>
+</template>

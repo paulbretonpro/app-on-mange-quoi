@@ -1,7 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/ui", "@nuxtjs/supabase", "@pinia/nuxt", "@nuxtjs/device"],
+  modules: [
+    "@nuxt/ui",
+    "@nuxtjs/supabase",
+    "@pinia/nuxt",
+    "@nuxtjs/device",
+    "@nuxt/image"
+  ],
   pinia: {
     storesDirs: ["./stores/**"],
   },
