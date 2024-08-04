@@ -51,7 +51,7 @@ const links = [
   <div class="h-screen flex flex-col">
     <UHorizontalNavigation
       :links="links"
-      class="mb-4 backdrop-blur border-b border-gray-200 dark:border-gray-800 sticky top-0"
+      class="mb-4 backdrop-blur border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50"
     >
       <template #default="{ link }">
         <span

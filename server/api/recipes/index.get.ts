@@ -8,7 +8,7 @@ export default eventHandler(async (event) => {
     perPage = 10,
     page = 1,
     orderBy = "created_at",
-    sortBy = "desc",
+    descending = true,
     categoriesId,
   } = getQuery<IRecipeParams>(event);
 
@@ -18,7 +18,8 @@ export default eventHandler(async (event) => {
     query = query.in("category_id", categoriesId);
   }
 
-  query = query.order(orderBy, { ascending: sortBy === "asc" });
+  console.log("order", query);
+  query = query.order(orderBy);
 
   const from = (page - 1) * perPage;
   const to = from + perPage - 1;

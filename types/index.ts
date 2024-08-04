@@ -16,7 +16,7 @@ export interface IRecipeParams {
   perPage: number;
   page: number;
   categoriesId?: number[];
-  sortBy?: string;
+  descending?: boolean;
   orderBy?: string;
 }
 

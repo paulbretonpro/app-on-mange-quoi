@@ -12,7 +12,7 @@ const optionsSort = [
     value: "created_at",
   },
 ];
-const sortBy = ref("name");
+const orderBy = ref("name");
 const page = ref(1);
 
 const { data: recipes } = await useAsyncData(
@@ -23,11 +23,12 @@ const { data: recipes } = await useAsyncData(
         categoriesId: categoriesSelected.value,
         perPage: 10,
         page: page.value,
-        sortBy: sortBy.value,
+        orderBy: orderBy.value,
+        descending: true,
       },
     }),
   {
-    watch: [categoriesSelected.value, page, sortBy],
+    watch: [categoriesSelected.value, page, orderBy],
   }
 );
 
@@ -54,7 +55,7 @@ const handleSelectCategory = (categoryId: number) => {
       @update:categories-selected="handleSelectCategory"
     />
     <USelectMenu
-      v-model="sortBy"
+      v-model="orderBy"
       :options="optionsSort"
       value-attribute="value"
       option-attribute="name"
