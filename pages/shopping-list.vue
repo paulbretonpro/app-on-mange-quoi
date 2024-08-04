@@ -1,0 +1,1 @@
+<template>shopping-list</template>
