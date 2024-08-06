@@ -31,3 +31,20 @@ export interface IIngredientQuantity {
   quantity: number;
   unit: string;
 }
+
+export interface IMenu {
+  id: string;
+  weekNumber: number;
+  ownerId: string;
+  createdAt: Date;
+}
+
+export interface IMenuRecipes {
+  id: string;
+  weekNumber: number;
+  recipes: {
+    day: number;
+    lunch: boolean;
+    recipe: IRecipe;
+  }[];
+}

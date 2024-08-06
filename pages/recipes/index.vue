@@ -48,6 +48,7 @@ const handleSelectCategory = (categoryId: number) => {
 };
 </script>
 <template>
+  <div class="text-3xl font-extrabold mb-6">Recettes</div>
   <div class="flex gap-4 justify-between mb-6 w-full">
     <ListCategories
       :categories="categories"

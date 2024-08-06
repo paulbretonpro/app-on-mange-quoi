@@ -38,7 +38,7 @@ defineProps<{
           :key="ingredient.name"
         >
           <div>{{ ingredient.name }}</div>
-          <div class="flex gap-2">
+          <div class="flex gap-2 justify-center">
             <div>{{ ingredient.quantity }}</div>
             <div>{{ ingredient.unit }}</div>
           </div>

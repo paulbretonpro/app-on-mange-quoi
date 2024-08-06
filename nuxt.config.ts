@@ -6,7 +6,8 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@pinia/nuxt",
     "@nuxtjs/device",
-    "@nuxt/image"
+    "@nuxt/image",
+    "dayjs-nuxt",
   ],
   pinia: {
     storesDirs: ["./stores/**"],
@@ -17,5 +18,21 @@ export default defineNuxtConfig({
   },
   colorMode: {
     preference: "dark",
+  },
+  dayjs: {
+    locales: ["en", "fr"],
+    plugins: ["relativeTime", "utc", "timezone"],
+    defaultLocale: "en",
+    defaultTimezone: "America/New_York",
+    externalPlugins: [
+      {
+        name: "weekOfYear",
+        package: "dayjs/plugin/weekOfYear",
+      },
+      {
+        name: "isoWeek",
+        package: "dayjs/plugin/isoWeek",
+      },
+    ],
   },
 });
