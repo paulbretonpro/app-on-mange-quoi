@@ -15,7 +15,7 @@ const optionsSort = [
 const orderBy = ref("name");
 const page = ref(1);
 
-const { data: recipes } = await useAsyncData(
+const { data: recipes, status: statusRecipes } = await useLazyAsyncData(
   "recipes",
   () =>
     $fetch("/api/recipes", {
@@ -32,7 +32,9 @@ const { data: recipes } = await useAsyncData(
   }
 );
 
-const { data: categories } = useFetch<ICategory[]>("/api/categories", {
+const { data: categories, status: statusCategories } = useLazyFetch<
+  ICategory[]
+>("/api/categories", {
   default: () => [],
 });
 
@@ -49,7 +51,10 @@ const handleSelectCategory = (categoryId: number) => {
 </script>
 <template>
   <div class="text-3xl font-extrabold mb-6">Recettes</div>
-  <div class="flex gap-4 justify-between mb-6 w-full">
+
+  <SkeletonListCategories v-if="statusCategories === 'pending'" />
+
+  <div v-else class="flex gap-4 justify-between mb-6 w-full">
     <ListCategories
       :categories="categories"
       :categories-selected="categoriesSelected"
@@ -64,12 +69,15 @@ const handleSelectCategory = (categoryId: number) => {
     />
   </div>
 
-  <div
-    class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-    v-if="recipes?.length"
-  >
-    <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
-  </div>
+  <SkeletonMenuCard v-if="statusRecipes === 'pending'" />
+  <template v-else>
+    <div
+      class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+      v-if="recipes?.length"
+    >
+      <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
+    </div>
 
-  <div v-else class="flex w-full justify-center">Aucune recette</div>
+    <div v-else class="flex w-full justify-center">Aucune recette</div>
+  </template>
 </template>

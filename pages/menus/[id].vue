@@ -92,38 +92,31 @@ const planningByDay = computed<IMenuByDay[]>(() => {
 </script>
 
 <template>
-  <div v-if="status === 'pending'">
-    <Loader />
-  </div>
-  <template v-else>
-    <div class="text-3xl font-extrabold mb-6">
-      Semaine {{ data?.weekNumber }}
+  <div class="text-3xl font-extrabold mb-6">Semaine {{ data?.weekNumber }}</div>
+  <div
+    v-for="menu in planningByDay"
+    :key="menu.dayName"
+    class="flex flex-col gap-2 mb-12 w-full"
+  >
+    <div class="text-sm md:text-base font-medium flex items-center gap-2">
+      <UIcon name="i-heroicons-calendar" size="sm" />
+      <div>{{ menu.dayName }}</div>
     </div>
     <div
-      v-for="menu in planningByDay"
-      :key="menu.dayName"
-      class="flex flex-col gap-2 mb-12 w-full"
+      v-if="menu.lunch.length === 0 && menu.dinner.length === 0"
+      class="text-sm text-gray-400 dark:text-gray-600"
     >
-      <div class="text-sm md:text-base font-medium flex items-center gap-2">
-        <UIcon name="i-heroicons-calendar" size="sm" />
-        <div>{{ menu.dayName }}</div>
+      Aucun repas
+    </div>
+    <div v-else class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col gap-2 grow">
+        <span class="text-xs text-gray-400 dark:text-gray-600">Midi</span>
+        <MenuRecipeCard v-for="lunch in menu.lunch" :name="lunch.name" />
       </div>
-      <div
-        v-if="menu.lunch.length === 0 && menu.dinner.length === 0"
-        class="text-sm text-gray-400 dark:text-gray-600"
-      >
-        Aucun repas
-      </div>
-      <div v-else class="grid grid-cols-2 gap-4">
-        <div class="flex flex-col gap-2 grow">
-          <span class="text-xs text-gray-400 dark:text-gray-600">Midi</span>
-          <MenuRecipeCard v-for="lunch in menu.lunch" :name="lunch.name" />
-        </div>
-        <div class="flex flex-col gap-2 grow">
-          <span class="text-xs text-gray-400 dark:text-gray-600">Soir</span>
-          <MenuRecipeCard v-for="dinner in menu.dinner" :name="dinner.name" />
-        </div>
+      <div class="flex flex-col gap-2 grow">
+        <span class="text-xs text-gray-400 dark:text-gray-600">Soir</span>
+        <MenuRecipeCard v-for="dinner in menu.dinner" :name="dinner.name" />
       </div>
     </div>
-  </template>
+  </div>
 </template>
