@@ -48,14 +48,19 @@ const handleSelectCategory = (categoryId: number) => {
     categoriesSelected.value.splice(index, 1);
   }
 };
+
+const categoriesIsLoading = computed(
+  () => statusCategories.value === "pending"
+);
+
+const recipesIsLoading = computed(() => statusRecipes.value === "pending");
 </script>
 <template>
   <div class="text-3xl font-extrabold mb-6">Recettes</div>
 
-  <SkeletonListCategories v-if="statusCategories === 'pending'" />
-
-  <div v-else class="flex gap-4 justify-between mb-6 w-full">
+  <div class="flex gap-4 justify-between mb-6 w-full">
     <ListCategories
+      :is-loading="categoriesIsLoading"
       :categories="categories"
       :categories-selected="categoriesSelected"
       @update:categories-selected="handleSelectCategory"
@@ -69,15 +74,17 @@ const handleSelectCategory = (categoryId: number) => {
     />
   </div>
 
-  <SkeletonMenuCard v-if="statusRecipes === 'pending'" />
-  <template v-else>
-    <div
-      class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-      v-if="recipes?.length"
-    >
-      <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe="recipe" />
-    </div>
+  <div
+    class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+    v-if="recipes?.length"
+  >
+    <RecipeCard
+      v-for="recipe in recipes"
+      :key="recipe.id"
+      :is-loading="recipesIsLoading"
+      :recipe="recipe"
+    />
+  </div>
 
-    <div v-else class="flex w-full justify-center">Aucune recette</div>
-  </template>
+  <div v-else class="flex w-full justify-center">Aucune recette</div>
 </template>

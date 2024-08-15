@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import type { IRecipe } from "~/types";
 
-defineProps<{
-  recipe: IRecipe;
-}>();
+withDefaults(
+  defineProps<{
+    isLoading?: boolean;
+    recipe: IRecipe;
+  }>(),
+  {
+    isLoading: false,
+  }
+);
 
 const modalIsOpen = ref(false);
 
@@ -12,7 +18,7 @@ const handlePostNewMenu = () => {
 };
 </script>
 <template>
-  <UCard class="min-w-56">
+  <UCard class="min-w-56" v-if="!isLoading">
     <NuxtLink :to="`/recipes/${recipe.id}`">
       <div class="flex items-center justify-center">
         <UIcon name="fa6-solid:bowl-food" class="w-12 h-12 text-primary" />
@@ -41,6 +47,22 @@ const handlePostNewMenu = () => {
       </div>
     </template>
   </UCard>
+
+  <div
+    v-else
+    v-for="index in 5"
+    :key="index"
+    class="animate-pulse border border-gray-200 dark:border-gray-600 rounded-md px-4 py-3 h-40 min-w-56 flex flex-col"
+  >
+    <div class="grow flex items-center justify-center">
+      <USkeleton class="w-16 h-8" :ui="{ rounded: 'rounded-full' }" />
+    </div>
+    <div class="flex gap-4">
+      <USkeleton class="w-full h-3" />
+      <USkeleton class="w-8 h-3" />
+      <USkeleton class="w-20 h-3" />
+    </div>
+  </div>
 
   <LazyRecipeModalChooseWeekAndDay
     v-model="modalIsOpen"

@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import type { ICategory } from "~/types";
 
-defineProps<{
-  categories: ICategory[];
-  categoriesSelected: number[];
-}>();
+withDefaults(
+  defineProps<{
+    isLoading?: boolean;
+    categories: ICategory[];
+    categoriesSelected: number[];
+  }>(),
+  {
+    isLoading: false,
+  }
+);
 
 const emit = defineEmits<{
   "update:categoriesSelected": [number];
@@ -13,6 +19,7 @@ const emit = defineEmits<{
 <template>
   <div class="flex gap-2 overflow-x-auto snap-x snap-mandatory pb-2">
     <UButton
+      v-if="!isLoading"
       class="whitespace-nowrap"
       :class="{
         'snap-start': index >= 0 && index < categories.length - 1,
@@ -24,5 +31,6 @@ const emit = defineEmits<{
       @click="emit('update:categoriesSelected', item.id)"
       >{{ item.name }}</UButton
     >
+    <SkeletonButton v-else v-for="index in 4" :key="index"></SkeletonButton>
   </div>
 </template>
