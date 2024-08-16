@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const colorMode = useColorMode();
+const supabase = useSupabaseClient();
 
 const isDark = computed({
   get() {
@@ -9,6 +10,11 @@ const isDark = computed({
     colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
   },
 });
+
+const signOut = async () => {
+  await supabase.auth.signOut();
+  navigateTo("/login");
+};
 </script>
 
 <template>
@@ -28,5 +34,6 @@ const isDark = computed({
         />
       </ClientOnly>
     </div>
+    <UButton @click="signOut">Logout</UButton>
   </UContainer>
 </template>

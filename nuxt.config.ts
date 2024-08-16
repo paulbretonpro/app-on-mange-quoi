@@ -9,6 +9,15 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "dayjs-nuxt",
   ],
+  supabase: {
+    redirectOptions: {
+      login: "/login",
+      callback: "/confirm",
+      include: undefined,
+      exclude: [],
+      cookieRedirect: false,
+    },
+  },
   pinia: {
     storesDirs: ["./stores/**"],
   },
