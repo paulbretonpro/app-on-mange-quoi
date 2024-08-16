@@ -32,7 +32,7 @@ const { data: recipes, status: statusRecipes } = await useLazyAsyncData(
   }
 );
 
-const { data: categories, status: statusCategories } = useLazyFetch<
+const { data: categories, status: statusCategories } = await useLazyFetch<
   ICategory[]
 >("/api/categories", {
   default: () => [],

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { data, refresh, status } = useLazyFetch("/api/menus");
+const { data, refresh, status } = await useLazyFetch("/api/menus");
 
 const isOpen = ref(false);
 
