@@ -1,20 +1,7 @@
-<script setup lang="ts">
-const { isMobile } = useDevice();
-
-const route = useRoute();
-const defaultPageLayout = ["/login"];
-
-const layoutName = computed(() => {
-  if (defaultPageLayout.includes(route.path)) {
-    return "default";
-  }
-
-  return isMobile ? "mobile" : "desktop";
-});
-</script>
+<script setup lang="ts"></script>
 <template>
   <NuxtLoadingIndicator></NuxtLoadingIndicator>
-  <NuxtLayout :name="layoutName">
+  <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
 </template>
