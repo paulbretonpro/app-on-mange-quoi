@@ -84,5 +84,5 @@ const recipesIsLoading = computed(() => statusRecipes.value === "pending");
     />
   </div>
 
-  <RecipeList :recipes="recipes" :recipes-is-loading="recipesIsLoading" />-->
+  <RecipeList :recipes="recipes" :recipes-is-loading="recipesIsLoading" />
 </template>
