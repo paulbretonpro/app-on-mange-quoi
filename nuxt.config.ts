@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  site: {
+    url: "https://app-omg-netlify.app",
+    name: "On mange quoi ?",
+    description: "Application on mange quoi",
+    defaultLocale: "fr",
+  },
   modules: [
     "@nuxt/ui",
     "@nuxtjs/supabase",
@@ -8,6 +14,7 @@ export default defineNuxtConfig({
     "@nuxtjs/device",
     "@nuxt/image",
     "dayjs-nuxt",
+    "@nuxtjs/seo",
   ],
   supabase: {
     redirectOptions: {
@@ -21,6 +28,7 @@ export default defineNuxtConfig({
   routeRules: {
     "/": {
       ssr: false,
+      prerender: true,
     },
   },
   pinia: {
@@ -34,10 +42,10 @@ export default defineNuxtConfig({
     preference: "dark",
   },
   dayjs: {
-    locales: ["en", "fr"],
+    locales: ["fr"],
     plugins: ["relativeTime", "utc", "timezone"],
-    defaultLocale: "en",
-    defaultTimezone: "America/New_York",
+    defaultLocale: "fr",
+    defaultTimezone: "Europe/Paris",
     externalPlugins: [
       {
         name: "weekOfYear",
