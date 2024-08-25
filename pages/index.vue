@@ -11,6 +11,7 @@ const { data: categories, status: statusCategories } = await useLazyFetch<
   ICategory[]
 >("/api/categories", {
   default: () => [],
+  key: "categories",
   getCachedData(key) {
     return nuxtApp.payload.data[key];
   },

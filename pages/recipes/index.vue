@@ -42,6 +42,7 @@ const { data: categories, status: statusCategories } = useLazyFetch<
   ICategory[]
 >("/api/categories", {
   default: () => [],
+  key: "categories",
   getCachedData(key) {
     return nuxtApp.payload.data[key];
   },
@@ -83,5 +84,5 @@ const recipesIsLoading = computed(() => statusRecipes.value === "pending");
     />
   </div>
 
-  <RecipeList :recipes="recipes" :recipes-is-loading="recipesIsLoading" />
+  <RecipeList :recipes="recipes" :recipes-is-loading="recipesIsLoading" />-->
 </template>
