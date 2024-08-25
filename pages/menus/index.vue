@@ -1,5 +1,11 @@
 <script setup lang="ts">
-const { data, refresh, status } = await useLazyFetch("/api/menus");
+const nuxtApp = useNuxtApp();
+
+const { data, refresh, status } = await useLazyFetch("/api/menus", {
+  getCachedData(key) {
+    return nuxtApp.payload.data[key];
+  },
+});
 
 const isOpen = ref(false);
 

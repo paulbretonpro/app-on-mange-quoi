@@ -18,6 +18,11 @@ export default defineNuxtConfig({
       cookieRedirect: false,
     },
   },
+  routeRules: {
+    "/": {
+      ssr: false,
+    },
+  },
   pinia: {
     storesDirs: ["./stores/**"],
   },

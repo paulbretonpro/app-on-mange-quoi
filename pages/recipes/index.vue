@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { ICategory } from "~/types";
 
+const nuxtApp = useNuxtApp();
+
 const categoriesSelected = ref<number[]>([]);
 const optionsSort = [
   {
@@ -15,7 +17,7 @@ const optionsSort = [
 const orderBy = ref("name");
 const page = ref(1);
 
-const { data: recipes, status: statusRecipes } = await useLazyAsyncData(
+const { data: recipes, status: statusRecipes } = useLazyAsyncData(
   "recipes",
   () =>
     $fetch("/api/recipes", {
@@ -28,14 +30,21 @@ const { data: recipes, status: statusRecipes } = await useLazyAsyncData(
       },
     }),
   {
+    default: () => [],
+    getCachedData(key) {
+      return nuxtApp.payload.data[key];
+    },
     watch: [categoriesSelected.value, page, orderBy],
   }
 );
 
-const { data: categories, status: statusCategories } = await useLazyFetch<
+const { data: categories, status: statusCategories } = useLazyFetch<
   ICategory[]
 >("/api/categories", {
   default: () => [],
+  getCachedData(key) {
+    return nuxtApp.payload.data[key];
+  },
 });
 
 const handleSelectCategory = (categoryId: number) => {
@@ -74,17 +83,5 @@ const recipesIsLoading = computed(() => statusRecipes.value === "pending");
     />
   </div>
 
-  <div
-    class="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
-    v-if="recipes?.length"
-  >
-    <RecipeCard
-      v-for="recipe in recipes"
-      :key="recipe.id"
-      :is-loading="recipesIsLoading"
-      :recipe="recipe"
-    />
-  </div>
-
-  <div v-else class="flex w-full justify-center">Aucune recette</div>
+  <RecipeList :recipes="recipes" :recipes-is-loading="recipesIsLoading" />
 </template>
