@@ -1,5 +1,6 @@
 import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
 import { transformObjectKeys } from "~/utils/case-transformer";
+import { Table } from "~/types";
 
 export default eventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
@@ -9,7 +10,7 @@ export default eventHandler(async (event) => {
 
   if (user) {
     const { data, error } = await client
-      .from("weeks_menus")
+      .from(Table.weeksMenus)
       .insert({ owner_id: user?.id, week_number: weekNumber })
       .select("*");
 

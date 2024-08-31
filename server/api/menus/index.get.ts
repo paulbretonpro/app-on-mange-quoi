@@ -1,4 +1,5 @@
 import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
+import { Table } from "~/types";
 import { transformObjectKeys } from "~/utils/case-transformer";
 
 export default eventHandler(async (event) => {
@@ -7,7 +8,7 @@ export default eventHandler(async (event) => {
 
   if (user) {
     const { data, error } = await client
-      .from("weeks_menus")
+      .from(Table.weeksMenus)
       .select("*")
       .eq("owner_id", user?.id)
       .order("week_number", { ascending: false });

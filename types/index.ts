@@ -1,3 +1,12 @@
+export enum Table {
+  categories = "categories",
+  ingredients = "ingredients",
+  recipes = "recipes",
+  weeksMenus = "weeks_menus",
+  weeksMenusRecipes = "weeks_menus_recipes",
+  shoppingLists = "shopping_lists",
+}
+
 export interface IRecipe {
   id: string;
   name: string;

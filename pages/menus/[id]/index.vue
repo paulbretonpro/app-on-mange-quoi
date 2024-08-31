@@ -1,16 +1,27 @@
 <script setup lang="ts">
 import type { IMenuRecipes, IRecipe } from "~/types";
 
+useSeoMeta({
+  title: "Menu",
+  description: "Gérez vos menus de la semaine",
+});
+
 interface IMenuByDay {
   day: number;
   dayName: string;
-  lunch: IRecipe[];
-  dinner: IRecipe[];
+  lunch: {
+    id: string;
+    recipe: IRecipe;
+  }[];
+  dinner: {
+    id: string;
+    recipe: IRecipe;
+  }[];
 }
 
 const route = useRoute();
 
-const { data } = await useLazyFetch<IMenuRecipes | null>(
+const { data, refresh, status } = await useLazyFetch<IMenuRecipes | null>(
   `/api/menus/${route.params.id}/recipes`
 );
 
@@ -63,32 +74,47 @@ const planningByDay = computed<IMenuByDay[]>(() => {
     (menu: { day: number; lunch: boolean; recipe: IRecipe }) => {
       const day = menu.day;
       if (day === 0) {
-        if (menu.lunch) defaultPlanningByDay[0].lunch.push(menu.recipe);
-        else defaultPlanningByDay[0].dinner.push(menu.recipe);
+        if (menu.lunch) defaultPlanningByDay[0].lunch.push(menu);
+        else defaultPlanningByDay[0].dinner.push(menu);
       } else if (day === 1) {
-        if (menu.lunch) defaultPlanningByDay[1].lunch.push(menu.recipe);
-        else defaultPlanningByDay[1].dinner.push(menu.recipe);
+        if (menu.lunch) defaultPlanningByDay[1].lunch.push(menu);
+        else defaultPlanningByDay[1].dinner.push(menu);
       } else if (day === 2) {
-        if (menu.lunch) defaultPlanningByDay[2].lunch.push(menu.recipe);
-        else defaultPlanningByDay[2].dinner.push(menu.recipe);
+        if (menu.lunch) defaultPlanningByDay[2].lunch.push(menu);
+        else defaultPlanningByDay[2].dinner.push(menu);
       } else if (day === 3) {
-        if (menu.lunch) defaultPlanningByDay[3].lunch.push(menu.recipe);
-        else defaultPlanningByDay[3].dinner.push(menu.recipe);
+        if (menu.lunch) defaultPlanningByDay[3].lunch.push(menu);
+        else defaultPlanningByDay[3].dinner.push(menu);
       } else if (day === 4) {
-        if (menu.lunch) defaultPlanningByDay[4].lunch.push(menu.recipe);
-        else defaultPlanningByDay[4].dinner.push(menu.recipe);
+        if (menu.lunch) defaultPlanningByDay[4].lunch.push(menu);
+        else defaultPlanningByDay[4].dinner.push(menu);
       } else if (day === 5) {
-        if (menu.lunch) defaultPlanningByDay[5].lunch.push(menu.recipe);
-        else defaultPlanningByDay[5].dinner.push(menu.recipe);
+        if (menu.lunch) defaultPlanningByDay[5].lunch.push(menu);
+        else defaultPlanningByDay[5].dinner.push(menu);
       } else if (day === 6) {
-        if (menu.lunch) defaultPlanningByDay[6].lunch.push(menu.recipe);
-        else defaultPlanningByDay[6].dinner.push(menu.recipe);
+        if (menu.lunch) defaultPlanningByDay[6].lunch.push(menu);
+        else defaultPlanningByDay[6].dinner.push(menu);
       }
     }
   );
 
   return defaultPlanningByDay;
 });
+
+const handleDeleteRecipe = async (
+  recipeId: string,
+  weeksMenusRecipesId: string
+) => {
+  await fetch(
+    `/api/menus/${route.params.id}/recipes/${recipeId}/order/${weeksMenusRecipesId}`,
+    {
+      method: "DELETE",
+    }
+  );
+  await refresh();
+};
+
+const isLoading = computed(() => status.value === "pending");
 </script>
 
 <template>
@@ -101,7 +127,11 @@ const planningByDay = computed<IMenuByDay[]>(() => {
     </NuxtLink>
   </div>
 
+  <div v-if="isLoading">
+    <MenuSkeleton v-for="menu in 7" :key="menu" />
+  </div>
   <div
+    v-else
     v-for="menu in planningByDay"
     :key="menu.dayName"
     class="flex flex-col gap-2 mb-12 w-full"
@@ -119,11 +149,21 @@ const planningByDay = computed<IMenuByDay[]>(() => {
     <div v-else class="grid grid-cols-2 gap-4">
       <div class="flex flex-col gap-2 grow">
         <span class="text-xs text-gray-400 dark:text-gray-600">Midi</span>
-        <MenuRecipeCard v-for="lunch in menu.lunch" :name="lunch.name" />
+        <MenuRecipeCard
+          v-for="lunch in menu.lunch"
+          :recipe="lunch.recipe"
+          @handle-delete-recipe="handleDeleteRecipe(lunch.recipe.id, lunch.id)"
+        />
       </div>
       <div class="flex flex-col gap-2 grow">
         <span class="text-xs text-gray-400 dark:text-gray-600">Soir</span>
-        <MenuRecipeCard v-for="dinner in menu.dinner" :name="dinner.name" />
+        <MenuRecipeCard
+          v-for="dinner in menu.dinner"
+          :recipe="dinner.recipe"
+          @handle-delete-recipe="
+            handleDeleteRecipe(dinner.recipe.id, dinner.id)
+          "
+        />
       </div>
     </div>
   </div>

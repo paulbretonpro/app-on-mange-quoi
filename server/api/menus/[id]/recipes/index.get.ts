@@ -1,5 +1,6 @@
 import { serverSupabaseClient, serverSupabaseUser } from "#supabase/server";
 import { transformObjectKeys } from "~/utils/case-transformer";
+import { Table } from "~/types";
 
 export default eventHandler(async (event) => {
   const client = await serverSupabaseClient(event);
@@ -8,8 +9,8 @@ export default eventHandler(async (event) => {
 
   if (user) {
     const { data, error } = await client
-      .from("weeks_menus")
-      .select("*, recipes:weeks_menus_recipes(*, recipe:recipes(name))")
+      .from(Table.weeksMenus)
+      .select("*, recipes:weeks_menus_recipes(*, recipe:recipes(id, name))")
       .eq("owner_id", user.id)
       .eq("id", menuId)
       .single();
