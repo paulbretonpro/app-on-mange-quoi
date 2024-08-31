@@ -10,7 +10,7 @@ interface IMenuByDay {
 
 const route = useRoute();
 
-const { data, status } = await useLazyFetch<IMenuRecipes | null>(
+const { data } = await useLazyFetch<IMenuRecipes | null>(
   `/api/menus/${route.params.id}/recipes`
 );
 
@@ -92,7 +92,15 @@ const planningByDay = computed<IMenuByDay[]>(() => {
 </script>
 
 <template>
-  <div class="text-3xl font-extrabold mb-6">Semaine {{ data?.weekNumber }}</div>
+  <div class="flex justify-between items-center">
+    <div class="text-3xl font-extrabold mb-6">
+      Semaine {{ data?.weekNumber }}
+    </div>
+    <NuxtLink :to="`/menus/${route.params.id}/shopping-list`">
+      <UButton>Voir les courses</UButton>
+    </NuxtLink>
+  </div>
+
   <div
     v-for="menu in planningByDay"
     :key="menu.dayName"

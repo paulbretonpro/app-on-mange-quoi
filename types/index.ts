@@ -48,3 +48,10 @@ export interface IMenuRecipes {
     recipe: IRecipe;
   }[];
 }
+
+export interface IShoppingList {
+  weeksMenusId: string;
+  name: string;
+  quantity: number;
+  unit: string;
+}

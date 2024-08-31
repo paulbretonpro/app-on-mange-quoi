@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     "dayjs-nuxt",
     "@nuxtjs/seo",
   ],
+  buildModules: ["@nuxtjs/pwa"],
   supabase: {
     redirectOptions: {
       login: "/login",
@@ -57,4 +58,5 @@ export default defineNuxtConfig({
       },
     ],
   },
+  pwa: {},
 });
