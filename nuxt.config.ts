@@ -31,6 +31,9 @@ export default defineNuxtConfig({
       ssr: false,
       prerender: true,
     },
+    "/recipes": {
+      ssr: false,
+    },
   },
   pinia: {
     storesDirs: ["./stores/**"],

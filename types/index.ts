@@ -22,9 +22,9 @@ export interface IRecipe {
 }
 
 export interface IRecipeParams {
-  perPage: number;
-  page: number;
-  categoriesId?: number[];
+  perPage: string;
+  page: string;
+  categoriesId?: string[];
   descending?: boolean;
   orderBy?: string;
 }

@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import type { IMenu } from "~/types";
+
 const nuxtApp = useNuxtApp();
 
-const { data, refresh, status } = await useLazyFetch("/api/menus", {
+const { data, refresh, status } = await useLazyFetch<IMenu[]>("/api/menus", {
   getCachedData(key) {
     return nuxtApp.payload.data[key];
   },
