@@ -115,7 +115,10 @@ const categoriesIsLoading = computed(
       />
     </div>
 
-    <div ref="recipesRef" class="flex flex-col gap-4 overflow-y-auto">
+    <div
+      ref="recipesRef"
+      class="flex flex-col gap-4 overflow-y-auto px-[1px] py-[1px]"
+    >
       <RecipeCard v-for="recipe in recipes" :key="recipe.id" :recipe />
 
       <RecipeListSkeleton class="mt-4" v-if="loading" :nb-recipes="perPage" />
