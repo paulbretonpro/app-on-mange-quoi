@@ -7,6 +7,12 @@ export enum Table {
   shoppingLists = "shopping_lists",
 }
 
+export enum FormMessages {
+  required = "Ce champ est obligatoire",
+  number = "La valeur doit être un nombre",
+  min0 = "La valeur doit être supérieure à 0",
+}
+
 export interface IRecipe {
   id: string;
   name: string;

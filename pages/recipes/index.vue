@@ -97,7 +97,13 @@ const categoriesIsLoading = computed(
 
 <template>
   <div class="flex flex-col h-[90vh] overflow-hidden">
-    <div class="text-3xl font-extrabold mb-6">Recettes</div>
+    <div class="flex items-center justify-between mb-6">
+      <div class="text-3xl font-extrabold">Recettes</div>
+      <UButton
+        icon="i-heroicons-plus"
+        @click="navigateTo('recipes/create')"
+      ></UButton>
+    </div>
 
     <div class="flex gap-4 justify-between mb-6 w-full">
       <ListCategories
